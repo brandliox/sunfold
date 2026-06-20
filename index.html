@@ -37,14 +37,35 @@
     color:var(--ink);
     background:var(--bg);
     margin:0;
-    overflow-x:hidden;
+     width: 100%;
+    overflow-x: hidden;
   }
-.container,
-.container-fluid,
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 .row {
-    max-width: 100%;
-       margin-left: 0 !important;
+    --bs-gutter-x: 0 !important;
+    margin-left: 0 !important;
     margin-right: 0 !important;
+}
+
+.container,
+.container-fluid {
+    padding-left: 12px;
+    padding-right: 12px;
+    overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+iframe {
+    max-width: 100%;
+    height: auto;
 }
   h1,h2,h3,h4,h5{
     font-family:'Plus Jakarta Sans', system-ui, sans-serif;
