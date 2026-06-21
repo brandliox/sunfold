@@ -22,15 +22,14 @@
     --ink-soft:#646e7c;
     --accent:#2f6fed;
     --accent-soft:#eaf2ff;
+    --accent-2:#16a34a;
     --dark:#0a1626;
     --dark-2:#0f2038;
     --card-bg:#f3f4f7;
     --line:#e7e9ee;
   }
 
-  *{ box-sizing:border-box;
-  /* border: 1px solid red !important; */
-  }
+  *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; scroll-padding-top:96px; }
   body{
     font-family:'Inter', system-ui, sans-serif;
@@ -38,35 +37,23 @@
     background:var(--bg);
     margin:0;
     overflow-x:hidden;
-    width: 100%;
   }
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
+  *, *::before, *::after{ box-sizing:border-box; }
 
-.row {
-    --bs-gutter-x: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
+  .row{ --bs-gutter-x:1.5rem; }
+  .row.g-0{ --bs-gutter-x:0; }
 
-.container,
-.container-fluid {
-    padding-left: 10px;
-    padding-right: 10px;
-    overflow-x: hidden;
-}
-/* 
-img,
-svg,
-video,
-iframe {
-    max-width: 100%;
-    height: auto;
-} */
+  .container, .container-fluid{
+    padding-left:1rem;
+    padding-right:1rem;
+  }
+  @media (min-width:576px){
+    .container, .container-fluid{ padding-left:1.5rem; padding-right:1.5rem; }
+  }
+
+  img, svg, video, iframe{ max-width:100%; height:auto; }
+
   h1,h2,h3,h4,h5{
     font-family:'Plus Jakarta Sans', system-ui, sans-serif;
     font-weight:700;
@@ -75,8 +62,14 @@ iframe {
   }
   p{ margin:0; }
   a{ text-decoration:none; }
-  img{ max-width:100%; display:block; }
+  img{ display:block; }
   section{ position:relative; }
+
+  /* ---------- Focus visibility (accessibility) ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
 
   /* ---------- Buttons ---------- */
   .btn{
@@ -97,8 +90,14 @@ iframe {
   .sf-btn-light{ background:#fff; color:var(--dark); }
   .sf-btn-light:hover{ color:var(--dark); transform:translateY(-2px); box-shadow:0 14px 28px -10px rgba(255,255,255,.25); }
   .btn-sm.sf-btn-dark{ padding:.6rem 1.25rem; font-size:.85rem; }
-  .sf-btn-icon svg{ margin-left:.55rem; transition:transform .25s ease; }
+  .sf-btn-icon svg{ margin-left:.55rem; transition:transform .25s ease; flex-shrink:0; }
   .sf-btn-icon:hover svg{ transform:translateX(4px); }
+  .sf-btn-accent{ background:var(--accent); color:#fff; }
+  .sf-btn-accent:hover{ background:#2459c9; color:#fff; transform:translateY(-2px); box-shadow:0 14px 28px -10px rgba(47,111,237,.45); }
+
+  @media (max-width:420px){
+    .btn{ padding:.78rem 1.3rem; font-size:.88rem; white-space:normal; text-align:center; }
+  }
 
   /* ---------- Navbar ---------- */
   .sf-navbar{ padding:1.15rem 0; background:transparent; transition:background .35s ease, padding .35s ease, box-shadow .35s ease; }
@@ -118,7 +117,7 @@ iframe {
 
   /* ---------- Hero ---------- */
   .sf-hero{ padding:9.5rem 0 5rem; background:linear-gradient(180deg,#eaf4fc 0%, #ffffff 75%); text-align:center; }
-  .sf-h1{ font-size:clamp(2.3rem,5vw,3.6rem); line-height:1.12; margin-bottom:1.3rem; }
+  .sf-h1{ font-size:clamp(2.1rem,5vw,3.6rem); line-height:1.12; margin-bottom:1.3rem; }
   .sf-lead{ color:var(--ink-soft); font-size:1.05rem; max-width:520px; margin:0 auto 1.5rem; line-height:1.65; }
   .sf-hero-img{ margin-top:3.5rem; border-radius:28px; overflow:hidden; box-shadow:0 40px 70px -30px rgba(15,30,60,.28); }
   .sf-hero-img img{ width:100%; height:480px; object-fit:cover; }
@@ -126,6 +125,10 @@ iframe {
     .sf-hero{ padding:7.5rem 0 3.5rem; }
     .sf-hero-img img{ height:230px; }
     .sf-hero-img{ border-radius:20px; margin-top:2.4rem; }
+  }
+  @media (max-width:380px){
+    .sf-hero{ padding:6.5rem 0 3rem; }
+    .sf-hero-img img{ height:190px; }
   }
 
   /* ---------- Social Proof (above hero CTA) ---------- */
@@ -137,21 +140,11 @@ iframe {
     margin:0 auto 1.6rem;
     flex-wrap:wrap;
   }
-  .sf-avatars{
-    display:flex;
-    align-items:center;
-    position:relative;
-  }
+  .sf-avatars{ display:flex; align-items:center; position:relative; }
   .sf-avatar{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:2px solid #fff;
-    object-fit:cover;
-    margin-left:-12px;
-    box-shadow:0 4px 12px -3px rgba(15,30,60,.22);
-    background:#fff;
-    animation:sf-bounce 2.6s ease-in-out infinite;
+    width:42px; height:42px; border-radius:50%; border:2px solid #fff;
+    object-fit:cover; margin-left:-12px; box-shadow:0 4px 12px -3px rgba(15,30,60,.22);
+    background:#fff; animation:sf-bounce 2.6s ease-in-out infinite;
   }
   .sf-avatar:first-child{ margin-left:0; }
   .sf-avatar-1{ animation-delay:0s; }
@@ -165,41 +158,29 @@ iframe {
     32%{ transform:translateY(-9px) scale(1.06); }
   }
 
-  .sf-proof-text{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    line-height:1.25;
-  }
-  .sf-stars{
-    font-size:.85rem;
-    letter-spacing:1px;
-    line-height:1;
-    margin-bottom:3px;
-  }
-  .sf-proof-text strong{
-    font-size:.88rem;
-    font-weight:700;
-    color:var(--ink);
-    font-family:'Plus Jakarta Sans';
-  }
-  .sf-proof-text span{
-    font-size:.78rem;
-    color:var(--ink-soft);
-    font-weight:500;
-  }
+  .sf-proof-text{ display:flex; flex-direction:column; align-items:flex-start; line-height:1.25; }
+  .sf-proof-text strong{ font-size:.88rem; font-weight:700; color:var(--ink); font-family:'Plus Jakarta Sans'; }
+  .sf-proof-text span{ font-size:.78rem; color:var(--ink-soft); font-weight:500; }
   @media (max-width:480px){
-    .sf-avatar{ width:36px; height:36px; margin-left:-10px; }
-    .sf-social-proof{ gap:.6rem; margin-bottom:1.3rem; }
+    .sf-avatar{ width:34px; height:34px; margin-left:-9px; }
+    .sf-social-proof{ gap:.55rem; margin-bottom:1.3rem; }
+    .sf-proof-text{ align-items:center; text-align:center; }
+  }
+  @media (max-width:360px){
+    .sf-social-proof{ flex-direction:column; }
   }
 
   /* ---------- Mission / stats ---------- */
   .sf-mission{ padding:6rem 0 3rem; text-align:center; }
-  .sf-statement{ font-family:'Plus Jakarta Sans'; font-weight:600; font-size:clamp(1.25rem,2.6vw,1.9rem); line-height:1.55; max-width:780px; margin:0 auto 3.6rem; }
+  .sf-statement{ font-family:'Plus Jakarta Sans'; font-weight:600; font-size:clamp(1.2rem,2.6vw,1.9rem); line-height:1.55; max-width:780px; margin:0 auto 3.6rem; }
   .sf-emoji{ font-size:1.05em; }
   .sf-stats{ max-width:680px; margin:0 auto; }
-  .sf-counter{ font-size:clamp(1.8rem,3.4vw,2.4rem); font-weight:800; font-family:'Plus Jakarta Sans'; margin-bottom:.3rem; }
-  .sf-stats p{ color:var(--ink-soft); font-size:.85rem; margin:0; }
+  .sf-counter{ font-size:clamp(1.5rem,3.4vw,2.4rem); font-weight:800; font-family:'Plus Jakarta Sans'; margin-bottom:.3rem; }
+  .sf-stats p{ color:var(--ink-soft); font-size:.8rem; margin:0; line-height:1.4; }
+  @media (max-width:480px){
+    .sf-mission{ padding:4rem 0 2rem; }
+    .sf-stats .col-4{ padding-left:.4rem; padding-right:.4rem; }
+  }
 
   /* ---------- Wireframe decorative ---------- */
   .sf-wireframe{ padding:1.5rem 0 5.5rem; }
@@ -210,7 +191,7 @@ iframe {
   .sf-marquee{ overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:1.5rem 0; background:var(--bg-soft); }
   .sf-marquee-track{ display:flex; width:max-content; white-space:nowrap; animation:sf-scroll 26s linear infinite; }
   .sf-marquee-track:hover{ animation-play-state:paused; }
-  .sf-marquee-item{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:clamp(1.4rem,3.6vw,2.1rem); color:var(--ink); padding:0 1.5rem; flex-shrink:0; }
+  .sf-marquee-item{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:clamp(1.3rem,3.6vw,2.1rem); color:var(--ink); padding:0 1.5rem; flex-shrink:0; }
   .sf-marquee-item.is-faint{ color:#c7cdd6; }
   @keyframes sf-scroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
@@ -218,30 +199,160 @@ iframe {
   .sf-card{ background:var(--card-bg); border-radius:22px; padding:2.3rem; height:100%; transition:transform .35s ease, box-shadow .35s ease; }
   .sf-card:hover{ transform:translateY(-6px); box-shadow:0 22px 44px -18px rgba(15,30,60,.18); }
   .sf-card-img{ padding:0; overflow:hidden; min-height:260px; }
-  .sf-card-img img{ width:100%; height:100%; object-fit:cover; transition:transform .6s ease; }
+  .sf-card-img img{ width:100%; height:100%; object-fit:cover; transition:transform .6s ease; min-height:260px; }
   .sf-card-img:hover img{ transform:scale(1.06); }
   .sf-tag{ display:inline-block; font-size:.76rem; font-weight:700; color:var(--accent); margin-bottom:.85rem; text-transform:uppercase; letter-spacing:.04em; }
   .sf-card h3{ font-size:1.32rem; margin-bottom:.65rem; }
   .sf-card p{ color:var(--ink-soft); font-size:.92rem; line-height:1.65; margin-bottom:1.5rem; }
+  @media (max-width:576px){
+    .sf-card{ padding:1.7rem; border-radius:18px; }
+  }
 
   /* ---------- Why choose ---------- */
   .sf-why{ padding:6.5rem 0; background:linear-gradient(180deg,#ffffff 0%, #eaf4fc 100%); text-align:center; }
   .sf-why-grid{ margin-top:3.2rem; text-align:left; }
-  .sf-icon-badge{ width:50px; height:50px; border-radius:14px; background:var(--accent); display:inline-flex; align-items:center; justify-content:center; margin-bottom:1.2rem; }
+  .sf-icon-badge{ width:50px; height:50px; border-radius:14px; background:var(--accent); display:inline-flex; align-items:center; justify-content:center; margin-bottom:1.2rem; flex-shrink:0; }
   .sf-icon-badge.sm{ width:40px; height:40px; border-radius:11px; flex-shrink:0; }
   .sf-why-item h4{ font-size:1.12rem; margin-bottom:.55rem; }
   .sf-why-item p{ color:var(--ink-soft); font-size:.9rem; line-height:1.65; }
+  @media (max-width:768px){ .sf-why{ padding:4rem 0; } }
 
   /* ---------- Banner ---------- */
   .sf-banner{ line-height:0; }
-  .sf-banner img{ width:100%; height:440px; object-fit:cover;
-padding: 5px;
-    border-radius: 12px; }
+  .sf-banner img{ width:100%; height:440px; object-fit:cover; }
   @media (max-width:768px){ .sf-banner img{ height:220px; } }
+
+  /* ===================================================== */
+  /* ---------- ENERGY SAVINGS CALCULATOR ---------- */
+  /* ===================================================== */
+  .sf-calc{ padding:6.5rem 0; background:var(--bg-soft); }
+  @media (max-width:768px){ .sf-calc{ padding:4rem 0; } }
+  .sf-calc-head{ text-align:center; max-width:620px; margin:0 auto 3.2rem; }
+
+  .sf-calc-shell{
+    background:#fff;
+    border-radius:28px;
+    box-shadow:0 30px 60px -28px rgba(15,30,60,.18);
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .sf-calc-grid{ display:grid; grid-template-columns:1.1fr 1fr; }
+  @media (max-width:900px){ .sf-calc-grid{ grid-template-columns:1fr; } }
+
+  .sf-calc-form{ padding:2.6rem; }
+  @media (max-width:576px){ .sf-calc-form{ padding:1.6rem; } }
+
+  .sf-calc-tabs{
+    display:flex;
+    justify-content:center;
+    background:var(--bg-soft);
+    border-radius:999px;
+    padding:4px;
+    margin:0 auto 1.8rem;
+    gap:2px;
+    width:100%;
+  }
+  .sf-calc-tab{
+    border:none; background:transparent; cursor:pointer;
+    padding:.55rem 1.1rem; border-radius:999px; font-size:.82rem; font-weight:600;
+    color:var(--ink-soft); transition:background .2s ease, color .2s ease;
+    font-family:'Inter', sans-serif;
+    flex:1 1 0;
+    text-align:center;
+  }
+  .sf-calc-tab.is-active{ background:var(--ink); color:#fff; }
+  @media (max-width:380px){
+    .sf-calc-tabs{ flex-wrap:wrap; border-radius:14px; }
+    .sf-calc-tab{ flex:1 1 auto; }
+  }
+
+  .sf-field{ margin-bottom:1.4rem; }
+  .sf-field label{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:.85rem; font-weight:600; color:var(--ink); margin-bottom:.55rem;
+  }
+  .sf-field label .sf-field-val{ color:var(--accent); font-weight:700; }
+  .sf-field-hint{ font-size:.76rem; color:var(--ink-soft); margin-top:.4rem; font-weight:400; }
+
+  .sf-range{
+    -webkit-appearance:none; appearance:none;
+    width:100%; height:6px; border-radius:999px;
+    background:var(--line); outline:none; cursor:pointer;
+  }
+  .sf-range::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none;
+    width:22px; height:22px; border-radius:50%;
+    background:var(--accent); border:4px solid #fff;
+    box-shadow:0 2px 8px rgba(47,111,237,.45); cursor:pointer;
+  }
+  .sf-range::-moz-range-thumb{
+    width:14px; height:14px; border-radius:50%;
+    background:var(--accent); border:4px solid #fff;
+    box-shadow:0 2px 8px rgba(47,111,237,.45); cursor:pointer;
+  }
+
+  .sf-input-group{ display:flex; gap:.6rem; }
+  .sf-input-group select,
+  .sf-input-group input,
+  .sf-select{
+    width:100%; border:1px solid var(--line); border-radius:12px;
+    padding:.7rem .9rem; font-size:.9rem; font-family:'Inter', sans-serif;
+    color:var(--ink); background:#fff; outline:none;
+    transition:border-color .2s ease;
+  }
+  .sf-input-group select:focus,
+  .sf-input-group input:focus,
+  .sf-select:focus{ border-color:var(--accent); }
+
+  .sf-currency-toggle{ display:flex; gap:.4rem; margin-bottom:1.6rem; }
+  .sf-currency-btn{
+    flex:1; border:1px solid var(--line); background:#fff; border-radius:12px;
+    padding:.55rem; font-size:.82rem; font-weight:700; cursor:pointer;
+    color:var(--ink-soft); transition:all .2s ease; font-family:'Plus Jakarta Sans';
+  }
+  .sf-currency-btn.is-active{ background:var(--accent-soft); border-color:var(--accent); color:var(--accent); }
+
+  .sf-calc-result{
+    background:radial-gradient(120% 140% at 10% 0%, var(--dark-2) 0%, var(--dark) 60%);
+    color:#fff; padding:2.6rem; display:flex; flex-direction:column; justify-content:center;
+  }
+  @media (max-width:576px){ .sf-calc-result{ padding:1.8rem; } }
+
+  .sf-result-highlight{
+    background:rgba(47,111,237,.14);
+    border:1px solid rgba(111,163,255,.35);
+    border-radius:20px;
+    padding:1.5rem 1.6rem;
+    margin-bottom:1.6rem;
+    box-shadow:0 0 0 1px rgba(111,163,255,.06), 0 20px 40px -20px rgba(47,111,237,.5);
+  }
+  .sf-result-label{ font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:rgba(255,255,255,.6); font-weight:700; margin-bottom:.6rem; }
+  .sf-result-amount{
+    font-family:'Plus Jakarta Sans'; font-weight:800;
+    font-size:clamp(2.8rem,7vw,3.8rem); line-height:1; margin-bottom:.4rem;
+    display:flex; align-items:baseline; gap:.45rem; flex-wrap:wrap;
+    color:#fff;
+    text-shadow:0 2px 24px rgba(111,163,255,.35);
+  }
+  .sf-result-amount span{ font-size:.34em; font-weight:700; color:#9fc1ff; }
+  .sf-result-sub{ color:rgba(255,255,255,.7); font-size:.92rem; font-weight:500; }
+  .sf-result-sub strong{ color:#fff; font-weight:800; }
+
+  .sf-result-stats{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.8rem; }
+  .sf-result-stat{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:1.1rem; }
+  .sf-result-stat strong{ display:block; font-family:'Plus Jakarta Sans'; font-size:1.25rem; font-weight:800; margin-bottom:.2rem; }
+  .sf-result-stat span{ font-size:.74rem; color:rgba(255,255,255,.55); }
+
+  .sf-result-bar-wrap{ margin-bottom:1.8rem; }
+  .sf-result-bar-labels{ display:flex; justify-content:space-between; font-size:.74rem; color:rgba(255,255,255,.55); margin-bottom:.5rem; }
+  .sf-result-bar{ height:10px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; display:flex; }
+  .sf-result-bar-fill{ height:100%; background:linear-gradient(90deg, var(--accent), #6fa3ff); border-radius:999px; transition:width .6s ease; }
+
+  .sf-calc-disclaimer{ font-size:.7rem; color:rgba(255,255,255,.4); line-height:1.5; }
 
   /* ---------- Dark CTA ---------- */
   .sf-cta-dark{ background:radial-gradient(120% 140% at 10% 0%, var(--dark-2) 0%, var(--dark) 55%); color:#fff; padding:6rem 0; }
-  .sf-cta-dark h2{ font-size:clamp(1.8rem,3.6vw,2.6rem); margin-bottom:1.2rem; line-height:1.18; }
+  .sf-cta-dark h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); margin-bottom:1.2rem; line-height:1.18; }
   .sf-cta-dark > .container > .row > div > p{ color:rgba(255,255,255,.62); margin-bottom:2.1rem; line-height:1.65; font-size:.98rem; }
   .sf-cta-dark h5{ font-size:1.2rem; margin-bottom:.85rem; }
   .sf-call-list{ list-style:none; padding:0; margin:1.7rem 0 0; display:flex; flex-direction:column; gap:1.2rem; }
@@ -254,17 +365,76 @@ padding: 5px;
   .sf-footer{ padding:4.5rem 0 0; background:#fff; }
   .sf-footer-top{ padding-bottom:3rem; border-bottom:1px solid var(--line); }
   .sf-footer-top p{ color:var(--ink-soft); font-size:.92rem; margin:.9rem 0 0; line-height:1.6; max-width:320px; }
-  .sf-subscribe{ display:flex; gap:.5rem; margin-top:1.5rem; max-width:340px; }
-  .sf-subscribe input{ flex:1; border:1px solid var(--line); border-radius:999px; padding:.7rem 1.15rem; font-size:.85rem; outline:none; }
+  .sf-subscribe{ display:flex; gap:.5rem; margin-top:1.5rem; max-width:340px; flex-wrap:wrap; }
+  .sf-subscribe input{ flex:1 1 180px; border:1px solid var(--line); border-radius:999px; padding:.7rem 1.15rem; font-size:.85rem; outline:none; min-width:0; }
   .sf-subscribe input:focus{ border-color:var(--accent); }
   .sf-subscribe button{ border:none; background:var(--ink); color:#fff; border-radius:999px; padding:.7rem 1.35rem; font-size:.85rem; font-weight:600; cursor:pointer; flex-shrink:0; }
   .sf-footer h6{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:.92rem; margin-bottom:1.1rem; }
   .sf-footer-col p{ font-size:.9rem; color:var(--ink-soft); margin-bottom:.55rem; }
-  .sf-hours-row{ display:flex; justify-content:space-between; gap:1rem; padding:.45rem 0; border-bottom:1px dashed var(--line); font-size:.88rem; color:var(--ink-soft); max-width:300px; }
+  .sf-hours-row{ display:flex; justify-content:space-between; gap:1rem; padding:.45rem 0; border-bottom:1px dashed var(--line); font-size:.85rem; color:var(--ink-soft); max-width:300px; flex-wrap:wrap; }
   .sf-footer-bottom{ padding:1.7rem 0; font-size:.82rem; color:var(--ink-soft); flex-wrap:wrap; gap:.6rem; }
   .sf-footer-bottom a{ color:var(--ink-soft); }
   .sf-footer-bottom a:hover{ color:var(--ink); }
-  .sf-footer-word{ font-family:'Plus Jakarta Sans'; font-weight:800; font-size:clamp(4rem,18vw,12rem); line-height:.8; text-align:center; color:transparent; -webkit-text-stroke:1px var(--line); letter-spacing:-.02em; margin-top:.5rem; overflow:hidden; user-select:none; }
+  .sf-footer-word{ font-family:'Plus Jakarta Sans'; font-weight:800; font-size:clamp(3.2rem,18vw,12rem); line-height:.8; text-align:center; color:transparent; -webkit-text-stroke:1px var(--line); letter-spacing:-.02em; margin-top:.5rem; overflow:hidden; user-select:none; }
+
+  /* ---------- Contact Toggler (WhatsApp + Call) ---------- */
+  .sf-contact-fab{
+    position:fixed; bottom:24px; right:24px; z-index:999;
+    display:flex; flex-direction:column; align-items:flex-end; gap:.75rem;
+  }
+  .sf-contact-options{
+    display:flex; flex-direction:column; align-items:flex-end; gap:.65rem;
+    margin-bottom:.1rem;
+  }
+  .sf-contact-option{
+    display:flex; align-items:center; gap:.65rem;
+    opacity:0; transform:translateY(8px) scale(.92);
+    pointer-events:none;
+    transition:opacity .22s ease, transform .22s ease;
+  }
+  .sf-contact-fab.is-open .sf-contact-option{
+    opacity:1; transform:translateY(0) scale(1);
+    pointer-events:auto;
+  }
+  .sf-contact-fab.is-open .sf-contact-option:nth-child(1){ transition-delay:.04s; }
+  .sf-contact-fab.is-open .sf-contact-option:nth-child(2){ transition-delay:.1s; }
+
+  .sf-contact-label{
+    background:var(--ink); color:#fff; font-size:.8rem; font-weight:600;
+    padding:.5rem .9rem; border-radius:10px; white-space:nowrap;
+    box-shadow:0 8px 20px -8px rgba(0,0,0,.35);
+  }
+  .sf-contact-circle{
+    width:50px; height:50px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,.4);
+    transition:transform .2s ease;
+  }
+  .sf-contact-circle:hover{ transform:scale(1.08); }
+  .sf-contact-circle.is-whatsapp{ background:#25D366; }
+  .sf-contact-circle.is-call{ background:var(--accent); }
+
+  .sf-contact-toggle{
+    width:60px; height:60px; border-radius:50%; border:none; cursor:pointer;
+    background:var(--ink); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 28px -8px rgba(0,0,0,.45);
+    transition:transform .3s ease, background .25s ease;
+    position:relative;
+  }
+  .sf-contact-toggle:hover{ transform:scale(1.06); }
+  .sf-contact-toggle svg{ transition:transform .3s ease, opacity .2s ease; position:absolute; }
+  .sf-contact-toggle .sf-icon-chat{ opacity:1; transform:rotate(0deg); }
+  .sf-contact-toggle .sf-icon-close{ opacity:0; transform:rotate(-45deg); }
+  .sf-contact-fab.is-open .sf-contact-toggle{ background:#d8323a; }
+  .sf-contact-fab.is-open .sf-contact-toggle .sf-icon-chat{ opacity:0; transform:rotate(45deg); }
+  .sf-contact-fab.is-open .sf-contact-toggle .sf-icon-close{ opacity:1; transform:rotate(0deg); }
+
+  @media (max-width:480px){
+    .sf-contact-fab{ bottom:16px; right:16px; }
+    .sf-contact-toggle{ width:54px; height:54px; }
+    .sf-contact-circle{ width:46px; height:46px; }
+    .sf-contact-label{ font-size:.76rem; padding:.45rem .8rem; }
+  }
 
   /* ---------- Reveal helper ---------- */
   [data-reveal]{ will-change:transform, opacity; }
@@ -272,6 +442,7 @@ padding: 5px;
   /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce){
     .sf-avatar{ animation:none; }
+    .sf-marquee-track{ animation:none; }
   }
 </style>
 </head>
@@ -304,6 +475,7 @@ padding: 5px;
         <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
         <li class="nav-item"><a class="nav-link" href="#expertise">Expertise</a></li>
+        <li class="nav-item"><a class="nav-link" href="#calculator">Savings Calculator</a></li>
         <li class="nav-item"><a class="nav-link" href="#why">Why Choose Us</a></li>
       </ul>
       <div class="d-flex gap-2 mt-3 mt-lg-0">
@@ -321,17 +493,16 @@ padding: 5px;
     <h1 class="sf-h1" data-reveal>Solar Energy, Tailored<br>to Your Needs</h1>
     <p class="sf-lead" data-reveal>Sunfold designs, installs, and maintains premium PV systems — customized for your property and your budget.</p>
 
-    <!-- Social proof: stars + avatars + trust text -->
+    <!-- Social proof: avatars + trust text -->
     <div class="sf-social-proof" data-reveal>
       <div class="sf-avatars" aria-hidden="true">
-        <img class="sf-avatar sf-avatar-1" src="https://i.pravatar.cc/100?img=12" alt="">
-        <img class="sf-avatar sf-avatar-2" src="https://i.pravatar.cc/100?img=32" alt="">
-        <img class="sf-avatar sf-avatar-3" src="https://i.pravatar.cc/100?img=45" alt="">
-        <img class="sf-avatar sf-avatar-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiOnNEmogKPDH_KmV4_b7Kxs8ug08GOxxftq7btvsSqwjzAKBSKeQBMPlb&s=10" alt="">
-        <img class="sf-avatar sf-avatar-5" src="https://i.pravatar.cc/100?img=56" alt="">
+        <img class="sf-avatar sf-avatar-1" src="https://i.pravatar.cc/100?img=12" alt="" loading="lazy">
+        <img class="sf-avatar sf-avatar-2" src="https://i.pravatar.cc/100?img=32" alt="" loading="lazy">
+        <img class="sf-avatar sf-avatar-3" src="https://i.pravatar.cc/100?img=45" alt="" loading="lazy">
+        <img class="sf-avatar sf-avatar-4" src="https://i.pravatar.cc/100?img=33" alt="" loading="lazy">
+        <img class="sf-avatar sf-avatar-5" src="https://i.pravatar.cc/100?img=56" alt="" loading="lazy">
       </div>
       <div class="sf-proof-text">
-        <!-- <div class="sf-stars">⭐⭐⭐⭐⭐</div> -->
         <strong>Trusted by 500+ loved customers</strong>
         <span>Rated 4.9/5 ⭐ from verified reviews</span>
       </div>
@@ -342,7 +513,7 @@ padding: 5px;
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </a>
     <div class="sf-hero-img" data-reveal>
-      <img src="assets/img/hero.jpg" alt="Modern home with a rooftop solar panel installation under a blue sky">
+      <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1600&auto=format&fit=crop" alt="Modern home with a rooftop solar panel installation under a blue sky">
     </div>
   </div>
 </header>
@@ -401,13 +572,13 @@ padding: 5px;
       </div>
       <div class="col-lg-6">
         <div class="sf-card sf-card-img" data-reveal>
-          <img src="assets/img/solar-home.jpg" alt="Modern multi-storey building with solar panels installed on the roof">
+          <img src="https://images.unsplash.com/photo-1592833167665-ebf9d00ed09d?q=80&w=1200&auto=format&fit=crop" alt="Modern multi-storey building with solar panels installed on the roof" loading="lazy">
         </div>
       </div>
 
       <div class="col-lg-6">
         <div class="sf-card sf-card-img" data-reveal>
-          <img src="assets/img/solar-car.jpg" alt="Aerial view of a solar panel canopy shading a parking area with cars">
+          <img src="https://images.unsplash.com/photo-1545208942-e1c9c5402a3c?q=80&w=1200&auto=format&fit=crop" alt="Aerial view of a solar panel canopy shading a parking area with cars" loading="lazy">
         </div>
       </div>
       <div class="col-lg-6">
@@ -433,10 +604,120 @@ padding: 5px;
       </div>
       <div class="col-lg-6">
         <div class="sf-card sf-card-img" data-reveal>
-          <img src="assets/img/solar-sun.jpg" alt="Solar panel array bordered by green farmland and forest">
+          <img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=1200&auto=format&fit=crop" alt="Solar panel array bordered by green farmland and forest" loading="lazy">
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENERGY SAVINGS CALCULATOR ============ -->
+<section class="sf-calc" id="calculator">
+  <div class="container">
+    <div class="sf-calc-head">
+      <span class="sf-eyebrow" data-reveal>Free Tool</span>
+      <h2 class="sf-h1" data-reveal style="font-size:clamp(1.8rem,4vw,2.6rem);">See What You Could Save</h2>
+      <p class="sf-lead" data-reveal style="margin-top:.9rem;">Move the sliders to match your current usage and get an instant estimate of your solar savings.</p>
+    </div>
+
+    <div class="sf-calc-shell" data-reveal>
+      <div class="sf-calc-grid">
+
+        <!-- FORM SIDE -->
+        <div class="sf-calc-form">
+
+          <div class="sf-calc-tabs" role="tablist" aria-label="Calculator input method">
+            <button type="button" class="sf-calc-tab is-active" data-mode="bill" role="tab" aria-selected="true">Monthly Bill</button>
+            <button type="button" class="sf-calc-tab" data-mode="units" role="tab" aria-selected="false">Units (kWh)</button>
+            <button type="button" class="sf-calc-tab" data-mode="system" role="tab" aria-selected="false">System Size</button>
+          </div>
+
+          <!-- Currency toggle -->
+          <div class="sf-currency-toggle">
+            <button type="button" class="sf-currency-btn is-active" data-currency="AED">AED — Dirham</button>
+            <button type="button" class="sf-currency-btn" data-currency="USD">USD — Dollar</button>
+          </div>
+
+          <!-- Mode: Monthly Bill -->
+          <div class="sf-calc-panel" data-panel="bill">
+            <div class="sf-field">
+              <label>Average monthly electricity bill <span class="sf-field-val" id="billVal">600</span></label>
+              <input type="range" class="sf-range" id="billRange" min="100" max="5000" step="50" value="600">
+              <div class="sf-field-hint">Drag to match the number on your latest utility bill.</div>
+            </div>
+          </div>
+
+          <!-- Mode: Units kWh -->
+          <div class="sf-calc-panel d-none" data-panel="units">
+            <div class="sf-field">
+              <label>Monthly consumption (kWh) <span class="sf-field-val" id="unitsVal">900</span></label>
+              <input type="range" class="sf-range" id="unitsRange" min="100" max="8000" step="50" value="900">
+              <div class="sf-field-hint">Check this on your meter or monthly statement.</div>
+            </div>
+          </div>
+
+          <!-- Mode: System size -->
+          <div class="sf-calc-panel d-none" data-panel="system">
+            <div class="sf-field">
+              <label>Roof area available (m²) <span class="sf-field-val" id="roofVal">60</span></label>
+              <input type="range" class="sf-range" id="roofRange" min="10" max="500" step="5" value="60">
+              <div class="sf-field-hint">Rough usable rooftop space for panels.</div>
+            </div>
+            <div class="sf-field">
+              <label>Estimated system size <span class="sf-field-val" id="systemKwVal">~8.4 kW</span></label>
+              <div class="sf-field-hint">Calculated automatically from your roof area (≈ 7 m² per kW).</div>
+            </div>
+          </div>
+
+          <div class="sf-field" style="margin-bottom:0;">
+            <label for="roofTypeSelect">Property type</label>
+            <select id="roofTypeSelect" class="sf-select">
+              <option value="1.0">Residential home</option>
+              <option value="1.15">Commercial / business</option>
+              <option value="0.9">Apartment / shared roof</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- RESULT SIDE -->
+        <div class="sf-calc-result">
+          <div class="sf-result-highlight">
+            <div class="sf-result-label">💰 Estimated Monthly Savings</div>
+            <div class="sf-result-amount"><span id="currSymbol">AED</span> <span id="monthlySavings">510</span></div>
+            <div class="sf-result-sub">That's <strong id="yearlySavings">6,120</strong> <span id="currSymbol2">AED</span> saved per year</div>
+          </div>
+
+          <div class="sf-result-stats">
+            <div class="sf-result-stat">
+              <strong id="systemSizeOut">6.2 kW</strong>
+              <span>Recommended system size</span>
+            </div>
+            <div class="sf-result-stat">
+              <strong id="paybackOut">4.8 yrs</strong>
+              <span>Estimated payback period</span>
+            </div>
+          </div>
+
+          <div class="sf-result-bar-wrap">
+            <div class="sf-result-bar-labels">
+              <span>Bill covered by solar</span>
+              <span id="coveragePct">85%</span>
+            </div>
+            <div class="sf-result-bar">
+              <div class="sf-result-bar-fill" id="coverageBar" style="width:85%"></div>
+            </div>
+          </div>
+
+          <a href="#contact" class="btn sf-btn-accent sf-btn-icon">Get an Exact Quote
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+
+          <p class="sf-calc-disclaimer" style="margin-top:1.2rem;">Estimate only, based on typical regional tariffs and sun-hours. Actual savings depend on a site survey — book a free consultation for an exact number.</p>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -445,7 +726,7 @@ padding: 5px;
 <section class="sf-why" id="why">
   <div class="container">
     <span class="sf-eyebrow" data-reveal>Why Choose Sunfold</span>
-    <h2 class="sf-h1" data-reveal style="font-size:clamp(2rem,4vw,3rem);">Solar Energy, Tailored<br>to Your Needs</h2>
+    <h2 class="sf-h1" data-reveal style="font-size:clamp(1.9rem,4vw,3rem);">Solar Energy, Tailored<br>to Your Needs</h2>
     <p class="sf-lead" data-reveal>Sunfold designs, installs, and maintains premium PV systems — customized for your property and your budget.</p>
 
     <div class="row g-4 sf-why-grid">
@@ -482,7 +763,7 @@ padding: 5px;
 
 <!-- ============ FULL-WIDTH BANNER ============ -->
 <section class="sf-banner">
-  <img src="https://media.istockphoto.com/id/525206743/photo/solar-panel-on-a-red-roof.jpg?s=612x612&w=0&k=20&c=xcAkdNj8dFDhu8734FpRDAZDtN2bjr48RKEd9j2FL0U=" alt="Wide aerial view of a large solar panel farm under a clear sky">
+  <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=1920&auto=format&fit=crop" alt="Wide aerial view of a large solar panel farm under a clear sky" loading="lazy">
 </section>
 
 <!-- ============ DARK CTA ============ -->
@@ -542,8 +823,8 @@ padding: 5px;
           Sunfold
         </a>
         <p>Your trusted partner in clean, future-ready energy.</p>
-        <form class="sf-subscribe">
-          <input type="email" placeholder="you@example.com" required>
+        <form class="sf-subscribe" novalidate>
+          <input type="email" placeholder="you@example.com" required aria-label="Email address">
           <button type="submit">Subscribe</button>
         </form>
       </div>
@@ -568,6 +849,31 @@ padding: 5px;
     <div class="sf-footer-word">sunfold</div>
   </div>
 </footer>
+
+<!-- ============ CONTACT TOGGLER (WHATSAPP + CALL) ============ -->
+<div class="sf-contact-fab" id="sfContactFab">
+
+  <div class="sf-contact-options">
+    <div class="sf-contact-option">
+      <span class="sf-contact-label">Call us</span>
+      <a href="tel:+971500000000" class="sf-contact-circle is-call" aria-label="Call Sunfold">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      </a>
+    </div>
+    <div class="sf-contact-option">
+      <span class="sf-contact-label">WhatsApp us</span>
+      <a href="https://wa.me/971500000000?text=Hi%20Sunfold%2C%20I%27d%20like%20a%20solar%20quote" class="sf-contact-circle is-whatsapp" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.27-1.38c1.43.78 3.05 1.2 4.77 1.2 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.5 0-2.97-.4-4.25-1.16l-.3-.18-3.13.82.83-3.05-.2-.31a8.18 8.18 0 0 1-1.27-4.34c0-4.52 3.68-8.2 8.22-8.2 4.53 0 8.21 3.68 8.21 8.2 0 4.53-3.68 8.22-8.21 8.22zm4.5-6.15c-.25-.12-1.46-.72-1.68-.8-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.96-.14.17-.29.18-.53.06-.25-.12-1.04-.39-1.99-1.23-.73-.66-1.23-1.47-1.37-1.71-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.87.85-.87 2.08 0 1.23.89 2.41 1.02 2.58.12.17 1.75 2.67 4.25 3.74.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.16-.48-.28z"></path></svg>
+      </a>
+    </div>
+  </div>
+
+  <button type="button" class="sf-contact-toggle" id="sfContactToggle" aria-label="Open contact options" aria-expanded="false">
+    <svg class="sf-icon-chat" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+    <svg class="sf-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+
+</div>
 
 <!-- ============ SCRIPTS ============ -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -652,6 +958,176 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
+
+  /* =========================================================
+     CONTACT TOGGLER (WhatsApp + Call)
+     ========================================================= */
+  (function () {
+    var fab = document.getElementById('sfContactFab');
+    var toggleBtn = document.getElementById('sfContactToggle');
+    if (!fab || !toggleBtn) return;
+
+    function closeFab() {
+      fab.classList.remove('is-open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+    function openFab() {
+      fab.classList.add('is-open');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+    }
+
+    toggleBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (fab.classList.contains('is-open')) closeFab(); else openFab();
+    });
+
+    document.addEventListener('click', function (e) {
+      if (fab.classList.contains('is-open') && !fab.contains(e.target)) closeFab();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeFab();
+    });
+  })();
+
+  /* =========================================================
+     ENERGY SAVINGS CALCULATOR
+     ========================================================= */
+  (function () {
+    var tabs = document.querySelectorAll('.sf-calc-tab');
+    var panels = document.querySelectorAll('.sf-calc-panel');
+    var currencyBtns = document.querySelectorAll('.sf-currency-btn');
+
+    var billRange = document.getElementById('billRange');
+    var billVal = document.getElementById('billVal');
+    var unitsRange = document.getElementById('unitsRange');
+    var unitsVal = document.getElementById('unitsVal');
+    var roofRange = document.getElementById('roofRange');
+    var roofVal = document.getElementById('roofVal');
+    var systemKwVal = document.getElementById('systemKwVal');
+    var roofTypeSelect = document.getElementById('roofTypeSelect');
+
+    var currSymbol = document.getElementById('currSymbol');
+    var currSymbol2 = document.getElementById('currSymbol2');
+    var monthlySavingsEl = document.getElementById('monthlySavings');
+    var yearlySavingsEl = document.getElementById('yearlySavings');
+    var systemSizeOut = document.getElementById('systemSizeOut');
+    var paybackOut = document.getElementById('paybackOut');
+    var coveragePct = document.getElementById('coveragePct');
+    var coverageBar = document.getElementById('coverageBar');
+
+    var state = {
+      mode: 'bill',
+      currency: 'AED'
+    };
+
+    // Approx tariffs (per kWh) and conversion baseline.
+    // AED tariff ~0.38 AED/kWh (UAE residential avg), USD shown via FX-ish conversion for clarity.
+    var TARIFF_AED_PER_KWH = 0.38;
+    var AED_TO_USD = 0.27; // approx conversion for display purposes
+    var COST_PER_KW_AED = 2800; // approx installed cost per kW (used only for payback estimate)
+    var SUN_FACTOR = 0.9; // fixed regional sun-exposure factor (high-sun region)
+
+    function fmt(n) {
+      return Math.round(n).toLocaleString('en-US');
+    }
+
+    function getMonthlyKwh() {
+      if (state.mode === 'units') {
+        return parseFloat(unitsRange.value);
+      }
+      if (state.mode === 'system') {
+        var roofM2 = parseFloat(roofRange.value);
+        var kw = roofM2 / 7; // ~7 m2 per kW
+        // assume ~120 kWh/month per kW in good sun (rough, adjusted by region factor below)
+        return kw * 120;
+      }
+      // bill mode: derive kWh from bill amount and currency
+      var billAmount = parseFloat(billRange.value);
+      var billInAed = state.currency === 'USD' ? billAmount / AED_TO_USD : billAmount;
+      return billInAed / TARIFF_AED_PER_KWH;
+    }
+
+    function updateLabels() {
+      billVal.textContent = fmt(billRange.value);
+      unitsVal.textContent = fmt(unitsRange.value);
+      roofVal.textContent = fmt(roofRange.value);
+      var kwFromRoof = (parseFloat(roofRange.value) / 7).toFixed(1);
+      systemKwVal.textContent = '~' + kwFromRoof + ' kW';
+    }
+
+    function calculate() {
+      updateLabels();
+
+      var regionFactor = SUN_FACTOR;
+      var propertyFactor = parseFloat(roofTypeSelect.value);
+
+      var monthlyKwh = getMonthlyKwh();
+      var effectiveKwh = monthlyKwh * regionFactor * propertyFactor;
+
+      // Solar typically offsets 70-90% of usage depending on system sizing; cap coverage 50-92%
+      var coverage = Math.min(0.92, Math.max(0.5, 0.55 + regionFactor * 0.3));
+      var offsetKwh = effectiveKwh * coverage;
+
+      var monthlySavingsAed = offsetKwh * TARIFF_AED_PER_KWH;
+      var yearlySavingsAed = monthlySavingsAed * 12;
+
+      // Recommended system size (kW) ~ based on monthly kWh need / ~120 kWh per kW per month
+      var recommendedKw = Math.max(2, (effectiveKwh / 120));
+      var systemCostAed = recommendedKw * COST_PER_KW_AED;
+      var paybackYears = systemCostAed / Math.max(yearlySavingsAed, 1);
+
+      var displayMonthly = monthlySavingsAed;
+      var displayYearly = yearlySavingsAed;
+      var symbol = 'AED';
+
+      if (state.currency === 'USD') {
+        displayMonthly = monthlySavingsAed * AED_TO_USD;
+        displayYearly = yearlySavingsAed * AED_TO_USD;
+        symbol = 'USD';
+      }
+
+      currSymbol.textContent = symbol;
+      currSymbol2.textContent = symbol;
+      monthlySavingsEl.textContent = fmt(displayMonthly);
+      yearlySavingsEl.textContent = fmt(displayYearly);
+      systemSizeOut.textContent = recommendedKw.toFixed(1) + ' kW';
+      paybackOut.textContent = (paybackYears > 20 ? '20+' : paybackYears.toFixed(1)) + ' yrs';
+      coveragePct.textContent = Math.round(coverage * 100) + '%';
+      coverageBar.style.width = Math.round(coverage * 100) + '%';
+    }
+
+    // Tab switching
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+        state.mode = tab.dataset.mode;
+        panels.forEach(function (p) {
+          p.classList.toggle('d-none', p.dataset.panel !== state.mode);
+        });
+        calculate();
+      });
+    });
+
+    // Currency switching
+    currencyBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        currencyBtns.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        state.currency = btn.dataset.currency;
+        calculate();
+      });
+    });
+
+    [billRange, unitsRange, roofRange, roofTypeSelect].forEach(function (el) {
+      el.addEventListener('input', calculate);
+    });
+
+    calculate();
+  })();
+
 });
 </script>
 </body>
